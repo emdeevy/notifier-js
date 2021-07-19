@@ -9,19 +9,113 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Card = function (_React$Component) {
     _inherits(Card, _React$Component);
 
-    function Card() {
+    function Card(_props) {
         _classCallCheck(this, Card);
 
-        return _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this, _props));
+
+        _this.handleChange = _this.handleChange.bind(_this);
+
+        _this.submitClick = _this.submitClick.bind(_this);
+        _this.registerClick = _this.submitClick.bind(_this);
+
+        _this.submitButton = React.createRef();
+
+        _this.state = {
+            type: "login",
+            email: "Email...",
+            password: "Password...",
+            profilePicture: _props.profilePicture
+        };
+        return _this;
     }
 
     _createClass(Card, [{
+        key: "submitClick",
+        value: function submitClick() {
+            this.submitButton.current.click();
+        }
+    }, {
+        key: "registerClick",
+        value: function registerClick() {
+            this.submitButton.current.click();
+        }
+    }, {
+        key: "handleChange",
+        value: function handleChange(_event, name) {
+
+            var curState = this.state;
+
+            if (name === 'email') {
+                curState.email = _event.target.value;
+            }
+
+            if (name === 'password') {
+                curState.password = _event.target.value;
+            }
+
+            this.setState(curState);
+        }
+    }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 "div",
-                { className: "card" },
-                "Denis"
+                { className: "outside-notifier-card-wrapper" },
+                React.createElement(
+                    "div",
+                    { className: "notifier-card p-2" },
+                    React.createElement("img", { alt: "Profile Picture", src: this.state.profilePicture, className: "notifier-card-img" }),
+                    React.createElement(
+                        "div",
+                        { className: "notifier-card-content" },
+                        React.createElement(
+                            "div",
+                            { className: "notifier-card-login-container d-flex align-items-end" },
+                            React.createElement(
+                                "div",
+                                { className: "notifier-card-login-input-wrapper" },
+                                React.createElement(
+                                    "div",
+                                    { className: "notifier-card-input-d" },
+                                    React.createElement("input", { className: "notifier-card-input notifier-card-input-email", type: "text", placeholder: "Email...", onChange: function onChange(e) {
+                                            return _this2.handleChange(e, 'email');
+                                        } })
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "notifier-card-input-d" },
+                                    React.createElement("input", { className: "notifier-card-input notifier-card-input-password", type: "password", placeholder: "Password...", onChange: function onChange(e) {
+                                            return _this2.handleChange(e, 'password');
+                                        } })
+                                )
+                            )
+                        )
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "hidden-form mt-2 p-2" },
+                    React.createElement(
+                        "form",
+                        { action: "/?command=login", method: "post" },
+                        React.createElement("input", { className: "notifier-card-input-email-real", type: "text", name: "email", value: this.state.email }),
+                        React.createElement("input", { className: "notifier-card-input-password-real", type: "password", name: "password", value: this.state.password }),
+                        React.createElement(
+                            "div",
+                            { className: "login-submit-button text-center", onClick: this.submitClick },
+                            "Log In"
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "register-submit-button text-center", onClick: this.registerClick },
+                            "Register"
+                        ),
+                        React.createElement("input", { className: "notifier-card-input-email-real", ref: this.submitButton, type: "submit", value: "Log In" })
+                    )
+                )
             );
         }
     }]);
